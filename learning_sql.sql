@@ -47,7 +47,7 @@ SELECT DISTINCT columa1, columaX FROM table_name;
 
 
 
--- .......:::::: Use an alias for each column ::::::.......
+-- .......:::::: Use an alias for a table ::::::.......
 -- When using an alias for a table always remember to use the dot notation to select the desired columns:
 -- doted notation aliasUsed.nameOfTheColumn
 	-- Use an alias for the customers table and retrieve the contact name and the title
@@ -157,6 +157,7 @@ SELECT columna1, columnaX FROM table_name WHERE columnaZ='un valor'
 
 
 -- .......:::::: Order registries (ORDER BY) ::::::.......
+-- Syntax:
 SELECT * FROM table_name ORDER BY columnaX ASC|DESC
 	--- ASC|DESC (Ascendente|Descendente) Son valores opcionales, ascendete se usa por defecto si no se especifica nada
 	-- Seleccionar el nombre de contacto (con el alias "nombre del cliente") y ciudad de los clientes que son de London
@@ -298,3 +299,27 @@ SELECT AVG(column_name) FROM table_name WHERE condition;
 SELECT SUM(column_name) FROM table_name WHERE condition; 
 	-- Find the average price of all products that costs more than 15 (unit_price)
 	SELECT SUM(unit_price) FROM products WHERE unit_price>15;
+
+
+
+
+
+
+-- .......:::::: SQL joins ::::::.......
+-- INNER JOIN
+-- Returns records that have matching values in both tables, INTERSECTION
+-- Syntax:
+SELECT column_name(s) FROM table1 INNER JOIN table2 ON table1.column_name = table2.column_name;
+	--  Select all orders with customer information
+	SELECT orders.order_id, customers.customer_id, orders.ship_name
+	FROM orders INNER JOIN customers ON customers.customer_id=orders.customer_id;
+	
+	SELECT orders.order_id, customers.customer_id, orders.ship_name, order_details.product_id
+	FROM orders INNER JOIN customers ON customers.customer_id=orders.customer_id
+	INNER JOIN order_details ON orders.order_id=order_details.order_id
+
+	--  Select all orders with customer information and also retrieve product details, AND also be specific with the product
+	SELECT orders.order_id, customers.customer_id, orders.ship_name, order_details.product_id, products.product_name
+	FROM orders INNER JOIN customers ON customers.customer_id=orders.customer_id
+	INNER JOIN order_details ON orders.order_id=order_details.order_id
+	INNER JOIN products ON products.product_id=order_details.product_id;
