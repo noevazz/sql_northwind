@@ -262,7 +262,7 @@ SELECT column_name(s) FROM table_name WHERE condition LIMIT number;
 -- Oracle Syntax:
 SELECT column_name(s) FROM table_name WHERE ROWNUM <= number; 
 
--- The WHERE is optional but was used to show how we can use it in conjuntion with LIMIT
+-- The WHERE is optional but it was used to show how we can use it in conjuntion with LIMIT
 
 	-- Select the last 2 registries from the customers table that are from Colima (it's a city)
 	SELECT * FROM customers WHERE city='Colima' ORDER BY customer_id DESC LIMIT 3;
@@ -337,7 +337,36 @@ SELECT column_name(s) FROM table1 INNER JOIN table2 ON table1.column_name = tabl
 -- LEFT JOIN
 -- Basically: A-B difference + Intersection, in other words conjuntion A + INNNER JOIN
 SELECT column_name(s) FROM table1 LEFT JOIN table2 ON table1.column_name = table2.column_name;
+-- See a graphival representation: https://www.w3schools.com/sql/img_leftjoin.gif
 	-- Select all the customers either they have an order or not, expected result: customer name, order id
 	-- also order the resulting table by the id of the order (desc)
 	SELECT customers.contact_name, orders.order_id FROM customers LEFT JOIN orders ON orders.customer_id=customers.customer_id
 	ORDER BY orders.order_id DESC;
+
+-- Right Join
+-- Basically: B-A + intersection
+SELECT column_name(s) FROM table1 RIGHT JOIN table2 ON table1.column_name = table2.column_name;
+-- See a graphical representation: https://www.w3schools.com/sql/img_rightjoin.gif
+	-- Select all orders and information about the customer
+	SELECT orders.order_id, customers.contact_name, orders.order_date, customers.phone
+	FROM orders
+	RIGHT JOIN customers ON orders.customer_id=customers.customer_id;
+
+-- FULL OUTER JOIN
+-- Returns all records when there is a match in left (table1) or right (table2) table records
+SELECT column_name(s) FROM table1 FULL OUTER JOIN table2 ON table1.column_name = table2.column_name WHERE condition; 
+-- See a graphical representation: https://www.w3schools.com/sql/img_fulljoin.gif
+	-- Select all orders and all customers
+	SELECT orders.order_id, customers.contact_name, orders.order_date, customers.phone
+	FROM orders
+	FULL OUTER JOIN customers ON orders.customer_id=customers.customer_id ORDER BY customers.contact_name;
+
+-- self join
+-- A self JOIN is a regular join, but the table is joined with itself.
+SELECT column_name(s) FROM table1 T1, table1 T2 WHERE condition;
+	-- Select customers that are from the same city:
+		SELECT T1.contact_name AS "CustomerName1", T2.contact_name AS "CustomerName2", T1.city
+	FROM customers T1, customers T2
+	WHERE T1.customer_id <> T2.customer_id
+	AND T1.city = T2.city
+	ORDER BY T1.city;
