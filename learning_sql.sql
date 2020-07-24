@@ -1,4 +1,13 @@
--- .......:::::: Select the whole table ::::::.......
+-- Hi welcome to this big file where you can find tons of SQL queries that
+-- you can use to consult the well known northwild database.
+-- The queries are organized from simple to complex.
+
+-- Send me an email if you see something to improve: jonovagu@gmail.com
+
+
+
+
+-- .......:::::: Select the whole table (all columns) ::::::.......
 -- Syntax
 SELECT * FROM table_name;
 
@@ -298,7 +307,7 @@ SELECT AVG(column_name) FROM table_name WHERE condition;
 -- Syntax
 SELECT SUM(column_name) FROM table_name WHERE condition; 
 	-- Find the average price of all products that costs more than 15 (unit_price)
-	SELECT SUM(unit_price) FROM products WHERE unit_price>15;
+	SELECT SUM(unit_price) FROM products WHERE unit_price>15;;
 
 
 
@@ -313,13 +322,22 @@ SELECT column_name(s) FROM table1 INNER JOIN table2 ON table1.column_name = tabl
 	--  Select all orders with customer information
 	SELECT orders.order_id, customers.customer_id, orders.ship_name
 	FROM orders INNER JOIN customers ON customers.customer_id=orders.customer_id;
-	
+
+	--  Select all orders with customer information and also retrieve product details,
 	SELECT orders.order_id, customers.customer_id, orders.ship_name, order_details.product_id
 	FROM orders INNER JOIN customers ON customers.customer_id=orders.customer_id
-	INNER JOIN order_details ON orders.order_id=order_details.order_id
+	INNER JOIN order_details ON orders.order_id=order_details.order_id;
 
 	--  Select all orders with customer information and also retrieve product details, AND also be specific with the product
 	SELECT orders.order_id, customers.customer_id, orders.ship_name, order_details.product_id, products.product_name
 	FROM orders INNER JOIN customers ON customers.customer_id=orders.customer_id
 	INNER JOIN order_details ON orders.order_id=order_details.order_id
 	INNER JOIN products ON products.product_id=order_details.product_id;
+
+-- LEFT JOIN
+-- Basically: A-B difference + Intersection, in other words conjuntion A + INNNER JOIN
+SELECT column_name(s) FROM table1 LEFT JOIN table2 ON table1.column_name = table2.column_name;
+	-- Select all the customers either they have an order or not, expected result: customer name, order id
+	-- also order the resulting table by the id of the order (desc)
+	SELECT customers.contact_name, orders.order_id FROM customers LEFT JOIN orders ON orders.customer_id=customers.customer_id
+	ORDER BY orders.order_id DESC;
