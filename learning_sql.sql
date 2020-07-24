@@ -370,3 +370,28 @@ SELECT column_name(s) FROM table1 T1, table1 T2 WHERE condition;
 	WHERE T1.customer_id <> T2.customer_id
 	AND T1.city = T2.city
 	ORDER BY T1.city;
+
+
+
+
+
+
+-- .......:::::: UNION ::::::.......
+-- The UNION operator is used to combine the result-set of two or more SELECT statements.
+-- Each SELECT statement within UNION must have the same number of columns
+-- The columns must also have similar data types
+-- The columns in each SELECT statement must also be in the same order
+SELECT column_name(s) FROM table1 UNION SELECT column_name(s) FROM table2; 
+-- UNION operator selects only distinct values by default. To allow duplicate values, use UNION ALL:
+SELECT column_name(s) FROM table1 UNION ALL SELECT column_name(s) FROM table2;
+	
+	--  Return the cities (only distinct values) from both the "customers" and the "employees" table:
+	SELECT city FROM customers UNION SELECT city FROM employees ORDER BY city LIMIT 6;
+
+	-- Allow duplicate values:
+	SELECT city FROM customers UNION ALL SELECT city FROM employees ORDER BY city LIMIT 6;
+
+	-- Return the German cities (only distinct values) from both the "customers" and the "employees" table:
+	SELECT city, country FROM customers WHERE country='Germany'
+	UNION
+	SELECT city, Country FROM employees WHERE country='Germany' ORDER BY city;
