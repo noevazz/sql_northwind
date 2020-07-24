@@ -381,9 +381,14 @@ SELECT column_name(s) FROM table1 T1, table1 T2 WHERE condition;
 -- Each SELECT statement within UNION must have the same number of columns
 -- The columns must also have similar data types
 -- The columns in each SELECT statement must also be in the same order
-SELECT column_name(s) FROM table1 UNION SELECT column_name(s) FROM table2; 
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2; 
+
 -- UNION operator selects only distinct values by default. To allow duplicate values, use UNION ALL:
-SELECT column_name(s) FROM table1 UNION ALL SELECT column_name(s) FROM table2;
+SELECT column_name(s) FROM table1
+UNION ALL
+SELECT column_name(s) FROM table2;
 	
 	--  Return the cities (only distinct values) from both the "customers" and the "employees" table:
 	SELECT city FROM customers UNION SELECT city FROM employees ORDER BY city LIMIT 6;
@@ -395,3 +400,51 @@ SELECT column_name(s) FROM table1 UNION ALL SELECT column_name(s) FROM table2;
 	SELECT city, country FROM customers WHERE country='Germany'
 	UNION
 	SELECT city, Country FROM employees WHERE country='Germany' ORDER BY city;
+
+	-- List al de employees and all the customers
+	SELECT 'Customer' AS Type, city FROM customers
+	UNION
+	SELECT 'Employee', city FROM employees;
+
+
+
+
+
+
+-- .......:::::: GROUP BY ::::::.......
+-- Groups rows that have the same values into summary rows
+-- It is often used with aggregate functions (COUNT, MAX, MIN, SUM, AVG) to group the result-set by one or more columns
+SELECT column_name(s) FROM table_name
+WHERE condition
+GROUP BY column_name(s) ORDER BY column_name(s);
+
+	-- Select the amount of customers for each city:
+		SELECT COUNT(city), city
+	FROM customers
+	GROUP BY city ORDER By city;
+
+	-- Select the amount of customer of these cities: Colima, London88
+	SELECT COUNT(city), city
+	FROM customers
+	WHERE city='Colima' or city='London'
+	GROUP BY city ORDER By city;
+
+
+
+
+
+
+-- .......:::::: Having ::::::.......
+-- The HAVING clause was added to SQL because the WHERE keyword could not be used with aggregate functions.
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+HAVING condition
+ORDER BY column_name(s);
+
+	-- Select the amount of customers for each city with more that 2 customers:
+		SELECT COUNT(city), city
+	FROM customers
+	GROUP BY city
+	HAVING COUNT(city)>2;
