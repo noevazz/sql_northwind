@@ -6,40 +6,40 @@
 
 - See available commands
 
-\\?
+    \\?
 
 - Log into a specific user
 
-sudo -u username PSQL
+    sudo -u username PSQL
 
 - List all databases
 
-\\l
+    \\l
 
 - Connect to a specific databases
 
-\\c db_name
+    \\c db_name
 
 - Show details of all tables
 
-\\dt
+    \\dt
 
 - You can filter this result by specifiying the table
 
-\\dt table_name
+    \\dt table_name
 
 - Show more details of all tables (it just add the size and description)
 
-\\dt+
+    \\dt+
 
 - You can filter this result by specifiying the table
 
-\\dt+ tablename
+    \\dt+ tablename
 
 - See details about the colummns in a table
 
-\\d table_name
+    \\d table_name
 
 - See more details about the colummns in a table
 
-\\d+ table_name
+    \\d+ table_name
