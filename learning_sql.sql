@@ -429,6 +429,22 @@ GROUP BY column_name(s) ORDER BY column_name(s);
 	WHERE city='Colima' or city='London'
 	GROUP BY city ORDER By city;
 
+	-- Select the amount of orders that each customer have
+	SELECT COUNT(orders.customer_id), customers.customer_id, customers.contact_name
+	FROM orders
+	LEFT JOIN customers on customers.customer_id=orders.customer_id
+	GROUP BY customers.contact_name, customers.customer_id
+	ORDER BY customers.contact_name;
+
+	-- Select the amout of orders taht a specific user has
+	SELECT COUNT(orders.customer_id), customers.customer_id, customers.contact_name
+	FROM orders
+	LEFT JOIN customers on customers.customer_id=orders.customer_id
+	WHERE customers.customer_id='LAMAI'
+	GROUP BY customers.contact_name, customers.customer_id
+	ORDER BY customers.contact_name;
+
+
 
 
 
@@ -448,3 +464,18 @@ ORDER BY column_name(s);
 	FROM customers
 	GROUP BY city
 	HAVING COUNT(city)>2;
+
+	-- Select the amount of orders that each customer have, having a customer with more than 10 orders
+	SELECT COUNT(orders.customer_id), customers.customer_id, customers.contact_name
+	FROM orders
+	LEFT JOIN customers on customers.customer_id=orders.customer_id
+	GROUP BY customers.contact_name, customers.customer_id
+	HAVING COUNT(orders.customer_id)>10
+	ORDER BY customers.contact_name;
+	-- orderning by the count:
+	SELECT COUNT(orders.customer_id) AS "Amount of orders", customers.customer_id, customers.contact_name
+	FROM orders
+	LEFT JOIN customers on customers.customer_id=orders.customer_id
+	GROUP BY customers.contact_name, customers.customer_id
+	HAVING COUNT(orders.customer_id)>10
+	ORDER BY "Amount of orders";
